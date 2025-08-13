@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Run daily at midnight UTC
 
+
+
 jobs:
   download-apod:
     runs-on: ubuntu-latest
@@ -31,3 +33,5 @@ jobs:
       with:
         name: apod-images
         path: apod_images/
+    - name: Install dependencies
+      run: pip install -r my_app/requirements.txt
