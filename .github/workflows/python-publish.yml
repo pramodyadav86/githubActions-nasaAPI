@@ -1,11 +1,9 @@
 name: Download NASA APOD
 
 on:
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
-
-
+    - cron: '0 0 * * *'
 
 jobs:
   download-apod:
@@ -21,7 +19,8 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      # Assuming 'requirements.txt' is in a subdirectory named 'my_app'
+      run: pip install -r my_app/requirements.txt 
 
     - name: Download APOD
       env:
@@ -33,5 +32,3 @@ jobs:
       with:
         name: apod-images
         path: apod_images/
-    - name: Install dependencies
-      run: pip install -r my_app/requirements.txt
