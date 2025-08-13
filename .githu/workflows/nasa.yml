@@ -1,0 +1,33 @@
+name: Download NASA APOD
+
+on:
+  workflow_dispatch:  # Allow manual trigger
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight UTC
+
+jobs:
+  download-apod:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Download APOD
+      env:
+        NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+      run: python apod_downloader.py
+
+    - name: Upload downloaded images (optional)
+      uses: actions/upload-artifact@v4
+      with:
+        name: apod-images
+        path: apod_images/
